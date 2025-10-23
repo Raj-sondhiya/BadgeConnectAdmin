@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Issuer List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body {
+            background-image: linear-gradient(45deg, rgb(248, 199, 207), rgb(148, 222, 222));
+        }
+
+        .table-container {
+            margin: 30px auto;
+            max-width: 95%;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+        }
+
+        .table th {
+            background-color: #0dcaf0;
+            color: white;
+        }
+
+        .action-icons i {
+            cursor: pointer;
+            margin: 0 6px;
+        }
+
+        .action-icons i:hover {
+            color: #0dcaf0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <div id="navbar-placeholder"></div>
+
+    <!-- Issuer Table -->
+    <div class="table-container">
+        <h3 class="text-center mb-4 text-info fw-bold"><i class="fa-solid fa-list me-2"></i>Issuer List</h3>
+
+        <div class="table-responsive">
+            <table class="table table-bordered align-middle text-center">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Organization</th>
+                        <th>Location</th>
+                        <th>Contact Person</th>
+                        <th>Primary Email</th>
+                        <th>Primary Phone</th>
+                        <th>Website</th>
+                        <th>Created At</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="issuerTableBody">
+                    <!-- Rows will be injected dynamically -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Load Navbar -->
+    <script>
+        fetch('navbar.html')
+            .then(res => res.text())
+            .then(data => document.getElementById('navbar-placeholder').innerHTML = data)
+            .catch(err => console.error('Navbar load failed:', err));
+    </script>
+
+    <!-- Load Issuer Data -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const tbody = document.getElementById("issuerTableBody");
+            const issuers = JSON.parse(localStorage.getItem("issuers")) || [];
+
+            if (issuers.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="9" class="text-muted">No issuers found</td></tr>`;
+                return;
+            }
+
+            issuers.forEach((issuer, index) => {
+                const row = `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${issuer.organizationName}</td>
+                        <td>${issuer.location}</td>
+                        <td>${issuer.contactFirstName} ${issuer.contactLastName}</td>
+                        <td>${issuer.primaryEmail}</td>
+                        <td>${issuer.primaryPhone}</td>
+                        <td>${issuer.website || '-'}</td>
+                        <td>${issuer.createdAt}</td>
+                        <td class="action-icons">
+                            <i class="fa-solid fa-pen-to-square text-warning" title="Edit"></i>
+                            <i class="fa-solid fa-trash text-danger" title="Delete"></i>
+                            <i class="fa-solid fa-eye text-primary" title="View"></i>
+                        </td>
+                    </tr>
+                `;
+                tbody.insertAdjacentHTML("beforeend", row);
+            });
+        });
+    </script>
+
+</body>
+
+</html>

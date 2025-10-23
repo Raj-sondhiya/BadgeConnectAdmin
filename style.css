@@ -1,0 +1,65 @@
+body {
+  /* background-color: #d7dee3 !important; */
+  background-image: linear-gradient(45deg, rgb(248, 199, 207), rgb(148, 222, 222));
+  /* Diagonal gradient at a 45-degree angle */
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Logo shape */
+.logo-icon {
+  width: 50px;
+  height: 50px;
+  background-color: #fff;
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%,
+      79% 91%, 50% 70%, 21% 91%, 32% 57%,
+      2% 35%, 39% 35%);
+}
+
+/* OTP input styling */
+.otp-input {
+  width: 48px;
+  height: 48px;
+  font-size: 18px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  text-align: center;
+}
+
+.otp-input:focus {
+  border-color: #00a8cc;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 168, 204, 0.4);
+}
+
+/* Button hover */
+.btn-info:hover {
+  background-color: #0094b0 !important;
+}
+
+
+
+/* Navbar customization */
+.navbar {
+  font-family: "Poppins", sans-serif;
+  font-size: 15px;
+}
+
+.navbar .nav-link {
+  color: #333 !important;
+  transition: color 0.2s ease;
+}
+
+.navbar .nav-link:hover {
+  color: #00a8cc !important;
+}
+
+.navbar-brand {
+  font-size: 18px;
+}
+
+.btn-outline-danger:hover {
+  background-color: #dc3545 !important;
+  color: #fff !important;
+}
