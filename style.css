@@ -96,3 +96,67 @@ body {
 .footer.shadow-sm {
   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.05);
 }
+
+
+/* Add Issuer css */
+
+body {
+  background-image: linear-gradient(45deg, rgb(248, 199, 207), rgb(148, 222, 222));
+}
+
+.form-container {
+  max-width: 700px;
+  margin: 18px auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  padding: 30px 40px;
+}
+
+.form-title {
+  font-weight: 700;
+  color: #0dcaf0;
+  margin-bottom: 25px;
+}
+
+.btn-cancel {
+  border-color: #6c757d;
+  color: #6c757d;
+}
+
+.btn-cancel:hover {
+  background-color: #6c757d;
+  color: white;
+}
+
+@media (max-width: 767px) {
+  .form-container {
+    padding: 25px;
+  }
+}
+
+
+/* Issuer list style */
+
+.table-container {
+  margin: 30px auto;
+  max-width: 95%;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+}
+
+.table th {
+  background-color: #0dcaf0;
+  color: white;
+}
+
+.action-icons i {
+  cursor: pointer;
+  margin: 0 6px;
+}
+
+.action-icons i:hover {
+  color: #0dcaf0;
+}

@@ -9,42 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <style>
-        body {
-            background-image: linear-gradient(45deg, rgb(248, 199, 207), rgb(148, 222, 222));
-        }
-
-        .form-container {
-            max-width: 700px;
-            margin: 18px auto;
-            background: #fff;
-            border-radius: 12px;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
-            padding: 30px 40px;
-        }
-
-        .form-title {
-            font-weight: 700;
-            color: #0dcaf0;
-            margin-bottom: 25px;
-        }
-
-        .btn-cancel {
-            border-color: #6c757d;
-            color: #6c757d;
-        }
-
-        .btn-cancel:hover {
-            background-color: #6c757d;
-            color: white;
-        }
-
-        @media (max-width: 767px) {
-            .form-container {
-                padding: 25px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -58,72 +23,177 @@
             <h3 class="form-title text-center mb-4"><i class="fa-solid fa-user-plus me-2"></i>Add Issuer</h3>
 
             <form id="addIssuerForm">
-                <div class="row g-3">
-                    <!-- Organization Name -->
-                    <div class="col-md-6">
-                        <label class="form-label fw-semibold">Organization Name</label>
-                        <input type="text" class="form-control" placeholder="Enter organization name" required>
-                    </div>
-                    <!-- Location -->
-                    <div class="col-md-6">
-                        <label class="form-label fw-semibold">Location</label>
-                        <input type="text" class="form-control" placeholder="Enter location" required>
+
+                <!-- ✅ Nav Tabs -->
+                <ul class="nav nav-tabs mb-3" id="issuerTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="org-tab" data-bs-toggle="tab" data-bs-target="#orgTab"
+                            type="button" role="tab">
+                            Organization
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="admin-tab" data-bs-toggle="tab" data-bs-target="#adminTab"
+                            type="button" role="tab">
+                            Administrative Accounts
+                        </button>
+                    </li>
+                </ul>
+
+                <!-- ✅ Tab Content -->
+                <div class="tab-content">
+
+                    <!-- ✅ TAB 1 — Organization -->
+                    <div class="tab-pane fade show active" id="orgTab" role="tabpanel">
+                        <div class="row g-3">
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Organization Name *</label>
+                                <input id="orgName" type="text" class="form-control"
+                                    placeholder="Enter organization name">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Postal Address *</label>
+                                <input id="postal" type="text" class="form-control" placeholder="Enter postal address">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Website *</label>
+                                <input id="orgWebsite" type="url" class="form-control" placeholder="Enter website URL">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Organization Email *</label>
+                                <input id="orgEmail" type="email" class="form-control"
+                                    placeholder="Enter organization email">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Primary Contact First Name *</label>
+                                <input id="pcFirstName" type="text" class="form-control" placeholder="Enter first name">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Primary Contact Last Name *</label>
+                                <input id="pcLastName" type="text" class="form-control" placeholder="Enter last name">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Primary Contact Email *</label>
+                                <input id="pcEmail" type="email" class="form-control"
+                                    placeholder="Enter primary contact email">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Primary Contact Phone *</label>
+                                <input id="pcPhone" type="tel" class="form-control"
+                                    placeholder="Enter primary contact phone">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Support Email *</label>
+                                <input id="supportEmail" type="email" class="form-control"
+                                    placeholder="Enter support email">
+                            </div>
+
+                        </div>
+
+                        <!-- ✅ NEXT button only for Tab 1 -->
+                        <div class="d-flex justify-content-end mt-4">
+                            <button type="button" id="nextTabBtn" class="btn btn-info text-white fw-semibold">
+                                Next &nbsp; <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
                     </div>
 
-                    <!-- Contact First Name -->
-                    <div class="col-md-6">
-                        <label class="form-label fw-semibold">Contact First Name</label>
-                        <input type="text" class="form-control" placeholder="Enter first name" required>
-                    </div>
-                    <!-- Contact Last Name -->
-                    <div class="col-md-6">
-                        <label class="form-label fw-semibold">Contact Last Name</label>
-                        <input type="text" class="form-control" placeholder="Enter last name" required>
-                    </div>
+                    <!-- ✅ TAB 2 — Administrative Accounts -->
 
-                    <!-- Primary Email -->
-                    <div class="col-md-6">
-                        <label class="form-label fw-semibold">Contact Primary Email (Admin #1)</label>
-                        <input type="email" class="form-control" placeholder="Enter primary email" required>
-                    </div>
-                    <!-- Secondary Email -->
-                    <div class="col-md-6">
-                        <label class="form-label fw-semibold">Contact Secondary Email (Admin #2)</label>
-                        <input type="email" class="form-control" placeholder="Enter secondary email">
-                    </div>
+                    <div class="tab-pane fade" id="adminTab" role="tabpanel">
+                        <div class="row g-3">
+                            <p class="lead text-md-center pb-2">Please complete even if this is the same as the primary
+                                contact person in organization details.</p>
 
-                    <!-- Primary Phone -->
-                    <div class="col-md-6">
-                        <label class="form-label fw-semibold">Contact Primary Phone</label>
-                        <input type="tel" class="form-control" placeholder="Enter primary phone" required>
-                    </div>
-                    <!-- Secondary Phone -->
-                    <div class="col-md-6">
-                        <label class="form-label fw-semibold">Contact Secondary Phone</label>
-                        <input type="tel" class="form-control" placeholder="Enter secondary phone">
-                    </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Admin 1 First Name *</label>
+                                <input id="admin1FirstName" type="text" class="form-control"
+                                    placeholder="Enter first name">
+                            </div>
 
-                    <!-- Postal Address -->
-                    <div class="col-md-6">
-                        <label class="form-label fw-semibold">Postal Address</label>
-                        <input type="text" class="form-control" placeholder="Enter postal address" required>
-                    </div>
-                    <!-- Website -->
-                    <div class="col-md-6">
-                        <label class="form-label fw-semibold">Website</label>
-                        <input type="url" class="form-control" placeholder="Enter website URL">
-                    </div>
-                </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Admin 1 Last Name *</label>
+                                <input id="admin1LastName" type="text" class="form-control"
+                                    placeholder="Enter last name">
+                            </div>
 
-                <!-- Buttons -->
-                <div class="d-flex justify-content-end mt-4">
-                    <button type="button" class="btn btn-cancel me-3 fw-semibold"
-                        onclick="window.location.href='adminHome.html'">
-                        <i class="fa-solid fa-xmark me-1"></i> Cancel
-                    </button>
-                    <button type="submit" class="btn btn-info text-white fw-semibold">
-                        <i class="fa-solid fa-paper-plane me-1"></i> Submit
-                    </button>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Admin 1 Email *</label>
+                                <input id="admin1Email" type="email" class="form-control"
+                                    placeholder="Enter admin email">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Organization Name (Admin #1)*</label>
+                                <input id="admin1OrgName" type="text" class="form-control"
+                                    placeholder="Enter organization name">
+                            </div>
+
+                            <!-- Optional Admins -->
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Admin 2 First Name</label>
+                                <input id="admin2FirstName" type="text" class="form-control">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Admin 2 Last Name</label>
+                                <input id="admin2LastName" type="text" class="form-control">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Admin 2 Email</label>
+                                <input id="admin2Email" type="email" class="form-control">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Organization Name (Admin #2)</label>
+                                <input id="admin2OrgName" type="text" class="form-control"
+                                    placeholder="Enter organization name">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Admin 3 First Name</label>
+                                <input id="admin3FirstName" type="text" class="form-control">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Admin 3 Last Name</label>
+                                <input id="admin3LastName" type="text" class="form-control">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Admin 3 Email</label>
+                                <input id="admin3Email" type="email" class="form-control">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Organization Name (Admin #3)</label>
+                                <input id="admin3OrgName" type="text" class="form-control"
+                                    placeholder="Enter organization name">
+                            </div>
+
+                        </div>
+
+                        <!-- ✅ Previous + Submit -->
+                        <div class="d-flex justify-content-between mt-4">
+                            <button type="button" id="prevTabBtn" class="btn btn-secondary fw-semibold">
+                                <i class="fa-solid fa-arrow-left"></i> &nbsp; Previous
+                            </button>
+
+                            <button type="submit" class="btn btn-success fw-semibold">
+                                Submit
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </form>
         </div>
@@ -134,65 +204,8 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Import navbar dynamically -->
-    <script>
-        fetch('navbar.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('navbar-placeholder').innerHTML = data;
-            })
-            .catch(err => console.error('Navbar load failed:', err));
-    </script>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const form = document.getElementById("addIssuerForm");
-
-            form.addEventListener("submit", (e) => {
-                e.preventDefault();
-
-                // Collect all form values
-                const formData = {
-                    organizationName: form.querySelector('[placeholder="Enter organization name"]').value.trim(),
-                    location: form.querySelector('[placeholder="Enter location"]').value.trim(),
-                    contactFirstName: form.querySelector('[placeholder="Enter first name"]').value.trim(),
-                    contactLastName: form.querySelector('[placeholder="Enter last name"]').value.trim(),
-                    primaryEmail: form.querySelector('[placeholder="Enter primary email"]').value.trim(),
-                    secondaryEmail: form.querySelector('[placeholder="Enter secondary email"]').value.trim(),
-                    primaryPhone: form.querySelector('[placeholder="Enter primary phone"]').value.trim(),
-                    secondaryPhone: form.querySelector('[placeholder="Enter secondary phone"]').value.trim(),
-                    postalAddress: form.querySelector('[placeholder="Enter postal address"]').value.trim(),
-                    website: form.querySelector('[placeholder="Enter website URL"]').value.trim(),
-                    createdAt: new Date().toLocaleString()
-                };
-
-                // Retrieve existing issuers from localStorage
-                const issuers = JSON.parse(localStorage.getItem("issuers")) || [];
-
-                // Add new one
-                issuers.push(formData);
-
-                // Save back to localStorage
-                localStorage.setItem("issuers", JSON.stringify(issuers));
-
-                alert("Issuer added successfully!");
-
-                // Optionally redirect to issuer list page
-                window.location.href = "issuerList.html";
-            });
-        });
-    </script>
-
-    <!-- Footer -->
-    <script>
-        fetch('footer.html')
-            .then(res => res.text())
-            .then(data => {
-                document.getElementById('footer-placeholder').innerHTML = data;
-                document.body.classList.add('page-loaded'); // ✅ ensures footer styling applies after load
-            })
-            .catch(err => console.error('Footer load failed:', err));
-    </script>
+    <script src="addIssuer.js"></script>
+    <script src="script.js"></script>
 
 </body>
 

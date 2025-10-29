@@ -137,3 +137,36 @@ if (logoutBtn) {
         }
     });
 }
+
+
+// ✅ Load Navbar into #navbar-placeholder if present
+function loadNavbar() {
+    const navbarPlaceholder = document.getElementById("navbar-placeholder");
+    if (!navbarPlaceholder) return;
+
+    fetch("navbar.html")
+        .then(res => res.text())
+        .then(html => {
+            navbarPlaceholder.innerHTML = html;
+        })
+        .catch(err => console.error("Navbar load failed:", err));
+}
+
+// ✅ Load Footer into #footer-placeholder if present
+function loadFooter() {
+    const footerPlaceholder = document.getElementById("footer-placeholder");
+    if (!footerPlaceholder) return;
+
+    fetch("footer.html")
+        .then(res => res.text())
+        .then(html => {
+            footerPlaceholder.innerHTML = html;
+        })
+        .catch(err => console.error("Footer load failed:", err));
+}
+
+// ✅ Auto-load where placeholders exist
+document.addEventListener("DOMContentLoaded", () => {
+    loadNavbar();
+    loadFooter();
+});
