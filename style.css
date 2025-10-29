@@ -101,7 +101,7 @@ body {
 /* Add Issuer css */
 
 body {
-  background-image: linear-gradient(45deg, rgb(248, 199, 207), rgb(148, 222, 222));
+  background-image: linear-gradient(45deg, rgb(245, 238, 239), rgb(207, 214, 214));
 }
 
 .form-container {
@@ -159,4 +159,10 @@ body {
 
 .action-icons i:hover {
   color: #0dcaf0;
+}
+
+/* Hide last column (Action Column) on homepage */
+.hide-actions th:last-child,
+.hide-actions td:last-child {
+  display: none !important;
 }
