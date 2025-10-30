@@ -1,24 +1,58 @@
 document.addEventListener("DOMContentLoaded", () => {
-
     const form = document.getElementById("addIssuerForm");
-
     const issuerIdFromQuery = new URLSearchParams(window.location.search).get("id");
     const heading = document.querySelector(".form-title");
     const actionButtons = document.getElementById("actionButtonsContainer");
 
     const ISSUER_STORAGE_KEY = "issuers";
-
     let isEditMode = !!issuerIdFromQuery;
     let issuers = JSON.parse(localStorage.getItem(ISSUER_STORAGE_KEY)) || [];
     let currentIssuerIndex = -1;
 
+    // ✅ Required field list
+    const requiredFields = [
+        "orgName", "postal", "orgWebsite", "orgEmail",
+        "pcFirstName", "pcLastName", "pcEmail", "pcPhone", "supportEmail",
+        "admin1FirstName", "admin1LastName", "admin1Email", "admin1OrgName"
+    ];
+
+    // ✅ Helper to show inline validation message
+    function showError(input, message) {
+        input.classList.add("is-invalid");
+        let feedback = input.parentElement.querySelector(".invalid-feedback");
+        if (!feedback) {
+            feedback = document.createElement("div");
+            feedback.className = "invalid-feedback";
+            feedback.textContent = message;
+            input.parentElement.appendChild(feedback);
+        }
+    }
+
+    // ✅ Helper to clear validation
+    function clearError(input) {
+        input.classList.remove("is-invalid");
+        const feedback = input.parentElement.querySelector(".invalid-feedback");
+        if (feedback) feedback.remove();
+    }
+
+    // ✅ Initialize validation listeners
+    requiredFields.forEach(id => {
+        const input = document.getElementById(id);
+        input.addEventListener("input", () => clearError(input));
+    });
+
+    // ✅ Edit Mode Pre-Fill
     if (isEditMode) {
         heading.innerHTML = `<i class="fa-solid fa-pen-to-square me-2"></i>Edit Issuer`;
-
         currentIssuerIndex = issuers.findIndex(i => i.id === issuerIdFromQuery);
         if (currentIssuerIndex === -1) {
-            alert("Issuer not found!");
-            window.location.href = "issuerList.html";
+            Swal.fire({
+                icon: "error",
+                title: "Issuer not found!",
+                confirmButtonColor: "#d33"
+            }).then(() => {
+                window.location.href = "issuerList.html";
+            });
             return;
         }
 
@@ -27,12 +61,10 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("postal").value = issuer.postalAddress;
         document.getElementById("orgWebsite").value = issuer.website;
         document.getElementById("orgEmail").value = issuer.organizationEmail;
-
         document.getElementById("pcFirstName").value = issuer.primaryContact.firstName;
         document.getElementById("pcLastName").value = issuer.primaryContact.lastName;
         document.getElementById("pcEmail").value = issuer.primaryContact.email;
         document.getElementById("pcPhone").value = issuer.primaryContact.phone;
-
         document.getElementById("supportEmail").value = issuer.supportEmail;
 
         issuer.adminAccounts.forEach((admin, idx) => {
@@ -43,51 +75,50 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         actionButtons.innerHTML = `
-            <button type="button" id="cancelBtn" class="btn btn-secondary fw-semibold">
-                Cancel
-            </button>
-            <button type="submit" class="btn btn-warning text-white fw-semibold">
-                Update
-            </button>
+            <button type="button" id="cancelBtn" class="btn btn-secondary fw-semibold">Cancel</button>
+            <button type="submit" class="btn btn-warning text-white fw-semibold">Update</button>
         `;
 
         document.getElementById("cancelBtn").addEventListener("click", () => {
             window.location.href = "issuerList.html";
         });
-
     } else {
         heading.innerHTML = `<i class="fa-solid fa-user-plus me-2"></i>Add Issuer`;
         actionButtons.innerHTML = `
-            <button type="submit" class="btn btn-success fw-semibold">
-                Submit
-            </button>
+            <button type="submit" class="btn btn-success fw-semibold">Submit</button>
         `;
     }
 
-    // ✅ Tab navigation buttons
-    const nextBtn = document.getElementById("nextTabBtn");
-    const prevBtn = document.getElementById("prevTabBtn");
+    // ✅ Tab Navigation
+    document.getElementById("nextTabBtn").addEventListener("click", () => {
+        new bootstrap.Tab(document.querySelector('#admin-tab')).show();
+    });
+    document.getElementById("prevTabBtn").addEventListener("click", () => {
+        new bootstrap.Tab(document.querySelector('#org-tab')).show();
+    });
 
-    if (nextBtn) {
-        nextBtn.addEventListener("click", () => {
-            const adminTab = document.querySelector('#admin-tab');
-            const tab = new bootstrap.Tab(adminTab);
-            tab.show();
-        });
-    }
-
-    if (prevBtn) {
-        prevBtn.addEventListener("click", () => {
-            const orgTab = document.querySelector('#org-tab');
-            const tab = new bootstrap.Tab(orgTab);
-            tab.show();
-        });
-    }
-
-
-
+    // ✅ Form Submit with Validation and SweetAlert
     form.addEventListener("submit", (e) => {
         e.preventDefault();
+
+        let isValid = true;
+        requiredFields.forEach(id => {
+            const input = document.getElementById(id);
+            if (!input.value.trim()) {
+                showError(input, "This field is required");
+                isValid = false;
+            }
+        });
+
+        if (!isValid) {
+            Swal.fire({
+                title: "Incomplete Form!",
+                text: "Please fill all required fields before submitting.",
+                icon: "warning",
+                confirmButtonColor: "#f1c40f"
+            });
+            return;
+        }
 
         const formData = {
             id: isEditMode ? issuerIdFromQuery : generateIssuerId(),
@@ -127,22 +158,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (isEditMode) {
             issuers[currentIssuerIndex] = formData;
-            alert("Issuer updated successfully ✅");
+            Swal.fire({
+                title: "Updated!",
+                text: "Issuer details updated successfully.",
+                icon: "success",
+                confirmButtonColor: "#3085d6"
+            }).then(() => {
+                localStorage.setItem(ISSUER_STORAGE_KEY, JSON.stringify(issuers));
+                window.location.href = "issuerList.html";
+            });
         } else {
             issuers.push(formData);
-            alert("Issuer added successfully ✅");
+            Swal.fire({
+                title: "Success!",
+                text: "Issuer added successfully.",
+                icon: "success",
+                confirmButtonColor: "#28a745"
+            }).then(() => {
+                localStorage.setItem(ISSUER_STORAGE_KEY, JSON.stringify(issuers));
+                window.location.href = "issuerList.html";
+            });
         }
-
-        localStorage.setItem(ISSUER_STORAGE_KEY, JSON.stringify(issuers));
-        window.location.href = "issuerList.html";
     });
 
-
+    // ✅ Helper — ID Generator
     function generateIssuerId() {
         let lastId = localStorage.getItem("issuerLastId");
         lastId = lastId ? parseInt(lastId) + 1 : 1;
         localStorage.setItem("issuerLastId", lastId);
         return String(lastId).padStart(3, "0");
     }
-
 });
