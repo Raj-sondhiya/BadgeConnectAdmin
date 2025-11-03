@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         actionButtons.innerHTML = `
-            <button type="button" id="cancelBtn" class="btn btn-secondary fw-semibold">Cancel</button>
+            <button type="button" id="cancelBtn" class="btn btn-secondary fw-semibold ms-2">Cancel</button>
             <button type="submit" class="btn btn-warning text-white fw-semibold">Update</button>
         `;
 
@@ -85,7 +85,8 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
         heading.innerHTML = `<i class="fa-solid fa-user-plus me-2"></i>Add Issuer`;
         actionButtons.innerHTML = `
-            <button type="submit" class="btn btn-success fw-semibold">Submit</button>
+            <button type="submit" class="btn btn-primary 
+             fw-semibold ms-2">Submit</button>
         `;
     }
 
@@ -162,7 +163,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 title: "Updated!",
                 text: "Issuer details updated successfully.",
                 icon: "success",
-                confirmButtonColor: "#3085d6"
+                confirmButtonColor: "#28a745"
             }).then(() => {
                 localStorage.setItem(ISSUER_STORAGE_KEY, JSON.stringify(issuers));
                 window.location.href = "issuerList.html";

@@ -157,13 +157,15 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!issuer) return;
 
         if (e.target.classList.contains("delete-btn")) {
+            const issuerName = `${issuer.primaryContact.firstName} ${issuer.primaryContact.lastName}`.trim() || "this issuer";
+
             Swal.fire({
-                title: `Are you sure you want to delete issuer ${issuerId}?`,
+                title: `Are you sure you want to delete ${issuerName}?`,
                 text: "This action cannot be undone!",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#d33",
-                cancelButtonColor: "#3085d6",
+                cancelButtonColor: "#6c757d",
                 confirmButtonText: "Yes, delete it!",
                 cancelButtonText: "Cancel",
             }).then((result) => {
@@ -174,7 +176,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     Swal.fire({
                         title: "Deleted!",
-                        text: "The issuer has been deleted successfully.",
+                        text: `${issuerName} has been deleted successfully.`,
                         icon: "success",
                         timer: 2000,
                         showConfirmButton: false
@@ -182,6 +184,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             });
         }
+
 
         if (e.target.classList.contains("edit-issuer")) {
             window.location.href = `issuerForm.html?id=${issuerId}`;
